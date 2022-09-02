@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Coffee extends Model
 {
     use HasFactory;
+
+    public function cats()
+    {
+        return $this->belongsToMany(Cat::class)->withPivot('count_cup');
+    }
 }

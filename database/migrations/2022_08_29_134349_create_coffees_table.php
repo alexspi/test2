@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 120)->unique()->comment("название кофе");
             $table->string('type_name', 60)->comment("Название типа кофе");
-            $table->decimal('calories')->nullable()->comment("Количество калорий");
+            $table->decimal('calories',5,1)->nullable()->comment("Количество калорий");
             $table->timestamps();
         });
     }

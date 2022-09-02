@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\ApiController;
+use App\Http\Resources\CoffeeResource;
+use App\Models\Coffee;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Cat;
+use App\Http\Resources\CatResource;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +19,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/cat', [ApiController::class,'getCat']);
+//Route::get('/cat', function () {
+//    return (new CatResource(Cat::with('coffees')->find(24)))
+//        ->response();
+////        ->header('X-Value', 'True');
+//});
+
+Route::get('/coffee', function () {
+    return  CoffeeResource::collection(Coffee::all())
+        ->response();
+//        ->header('X-Value', 'True');
 });

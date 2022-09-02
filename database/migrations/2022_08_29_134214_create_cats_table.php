@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('cats', function (Blueprint $table) {
             $table->id();
             $table->string('name', 120)->unique()->comment("Имя кота");
-            $table->decimal('weight')->comment("Вес кота");
+            $table->float('weight',6,3)->comment("Вес кота");
             $table->timestamps();
         });
     }
