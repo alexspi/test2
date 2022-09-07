@@ -11,20 +11,18 @@ class Cat extends Model
 
     public function coffees()
     {
-        return $this->belongsToMany(Coffee::class)->withPivot('count_cup');
+        return $this->belongsToMany(Coffee::class)
+            ->using(CatCoffee::class);
     }
 
     public function favorite($id)
     {
-        $cats = $this->where('id',$id)->with('coffees')->get()->toArray();
-
-        foreach ($cats->flatMap->coffees as $coffee) {
-            echo $coffee->cup->count_cup;
-        }
+        $arr = $this->with('coffees')->find($id)->toArray();
+        $c = array_count_values(array_column($arr['coffees'], 'id'));
+        $val = array_search(max($c), $c);
+        $coffe =Coffee::select('type_name')->find($val);
+        return $coffe->type_name;
     }
 
-    public function filterCats($value)
-    {
-        return $this->coffees()->wherePivot('count_cup', $value);
-    }
+
 }

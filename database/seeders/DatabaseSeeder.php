@@ -25,11 +25,11 @@ class DatabaseSeeder extends Seeder
 //                ->create();
 //        }
 
-        Cat::factory(30)
+        Cat::factory(20)
             ->create();
-        Coffee::factory(20)
+        Coffee::factory(10)
             ->create();
-        CatCoffee::factory(100)
+        CatCoffee::factory(400)
             ->create();
 
     }

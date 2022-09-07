@@ -21,11 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/cat', [ApiController::class,'getCat']);
-//Route::get('/cat', function () {
-//    return (new CatResource(Cat::with('coffees')->find(24)))
-//        ->response();
-////        ->header('X-Value', 'True');
-//});
 
 Route::get('/coffee', function () {
     return  CoffeeResource::collection(Coffee::all())

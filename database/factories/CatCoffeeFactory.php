@@ -17,9 +17,9 @@ class CatCoffeeFactory extends Factory
     public function definition()
     {
         return [
-            'cat_id' => fake()->numberBetween(1,30),
-            'coffee_id'=>fake()->numberBetween(1,20),
-             'count_cup'=>fake()->numberBetween(1,20)
+            'cat_id' => fake()->numberBetween(1,20),
+            'coffee_id'=>fake()->numberBetween(1,10),
+
         ];
     }
 }

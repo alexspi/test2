@@ -24,11 +24,19 @@ class CatRequest extends FormRequest
     public function rules()
     {
         return [
-            'search',
-            'fats_min',
-            'fats_max',
-            'coffe',
-            'coffe_type'
+//            'search' =>'required',
+            'fats_min'=>'required',
+            'fats_max'=>'required',
+//            'coffe'=>'required',
+//            'coffe_type'=>'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'search.required' => 'A title is required',
+            'coffe.required' => 'A message is required',
         ];
     }
 }

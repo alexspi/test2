@@ -11,6 +11,11 @@ class Coffee extends Model
 
     public function cats()
     {
-        return $this->belongsToMany(Cat::class)->withPivot('count_cup');
+        return $this->belongsToMany(Cat::class)
+            ->using(CatCoffee::class);
+    }
+
+    public  function type($id){
+      return  $this->find($id)->get('type_name');
     }
 }
