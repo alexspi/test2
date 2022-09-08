@@ -17,36 +17,14 @@ class CatResource extends JsonResource
      */
     public function toArray($request)
     {
-        $filter = $request->all();
-        $cats = Cat::query()
-            ->select()
-            ->with('coffees')
-            ->withSum('coffees', 'calories')
-        ;
 
-        if (Arr::has($filter, 'search')) {
-            $cats = $cats->where('cats.name', 'like', '%' . $filter['search'] . '%');
-        }
-        if (Arr::has($filter, 'fats_min')) {
-            $cats = $cats->where('cats.weight', '>=', $filter['fats_min']);
-        }
-        if (Arr::has($filter, 'fats_max')) {
-            $cats = $cats->where('cats.weight', '<=', $filter['fats_max']);
-        }
-
-        $cats = $cats->get();
-        $grades = [];
-        foreach ($cats as $grade) {
-            $grades[] = array(
-                'id' => $grade->id,
-                'name' => $grade->name,
-                'weight' => $grade->weight,
-                 'favorite_coffee' => $grade->favorite($grade->id),
-                'callories' => $grade->coffees_sum_calories
-
-            );
-        }
-        return $grades;
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'weight' => $this->weight,
+            'favorite_coffee' => $this->favorite($this->id),
+            'callories' => $this->coffees_sum_calories
+        ];
 
     }
 }

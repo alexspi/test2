@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('cat_coffee', function (Blueprint $table) {
             $table->bigInteger('cat_id')->unsigned()->index();
-            $table->foreign('cat_id')->references('id')->on('cats')->onDelete('cascade');
+            $table->foreign('cat_id')->references('id')->on('cats')->onUpdate('cascade');
             $table->bigInteger('coffee_id')->unsigned()->index();
-            $table->foreign('coffee_id')->references('id')->on('coffees')->onDelete('cascade');
+            $table->foreign('coffee_id')->references('id')->on('coffees')->onUpdate('cascade');
             $table->integer('count_cup')->default(0)->comment('количество кружек');
             $table->timestamps();
         });

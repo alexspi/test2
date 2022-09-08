@@ -22,19 +22,26 @@ class ApiController extends Controller
      */
     public function getCat(Request $request)
     {
-//        dd($request->all());
+
         $filter = $request->all();
-//        dump($filter);
         $cats = Cat::query()
             ->select()
-//            ->favorite();
             ->with('coffees')
-            ->withSum('coffees', 'calories')
-       ;
+            ->withSum('coffees', 'calories');
 
-        $cats = $cats->get()->toArray();
+        if (Arr::has($filter, 'search')) {
+            $cats = $cats->where('name', 'like', '%' . $filter['search'] . '%');
+        }
+        if (Arr::has($filter, 'fats_min')) {
+            $cats = $cats->where('weight', '>=', $filter['fats_min']);
+        }
+        if (Arr::has($filter, 'fats_max')) {
+            $cats = $cats->where('weight', '<=', $filter['fats_max']);
+        }
 
-        return (new CatResource($filter))
+        $cats = $cats->get();
+
+        return (CatResource::collection($cats))
             ->response();
     }
 }
