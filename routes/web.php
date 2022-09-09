@@ -20,10 +20,3 @@ use App\Http\Resources\CatResource;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/cat', [ApiController::class,'getCat']);
-
-Route::get('/coffee', function () {
-    return  CoffeeResource::collection(Coffee::all())
-        ->response();
-//        ->header('X-Value', 'True');
-});

@@ -20,7 +20,7 @@ class CoffeeFactory extends Factory
         return [
             'name' => fake()->unique()->numerify('кофе####'),
             'type_name' => fake()->randomElement(['тип-a', 'тип-b', 'тип-c', 'тип-d', 'тип-e']),
-            'calories' => fake()->randomFloat(1, 2, 10)
+            'calories' => fake()->randomFloat(1, 20, 80)
 
         ];
     }

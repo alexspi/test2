@@ -2,30 +2,19 @@
 
 namespace App\Exceptions;
 
+use App\Traits\ApiResponser;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ApiResponser;
 
-    public function render($request, Throwable $e)
-    {
-
-        if ($e instanceof HttpException || $e instanceof ModelNotFoundException) {
-            return redirect('/'.session('city'));
-        }
-        // This will replace our 404 response with
-        // a JSON response.
-//        if ($exception instanceof ModelNotFoundException) {
-//            return response()->json([
-//                'error' => 'Resource not found'
-//            ], 404);
-//        }
-
-//        return parent::render($request, $exception);
-    }
     /**
      * A list of exception types with their corresponding custom log levels.
      *
@@ -65,5 +54,43 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        $response = $this->handleException($request, $exception);
+        return $response;
+    }
+
+//    public function invalidJson($request, ValidationException $exception)
+//    {
+//        return response()->json(['result' => false, 'message' => $exception->errors()[0]], $exception->status);
+//    }
+
+    public function handleException($request, Throwable $exception)
+    {
+
+        if ($exception instanceof ValidationException) {
+            return $this->errorValidate($exception->errors(), $exception->status);
+        }
+
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return $this->errorResponse('The specified method for the request is invalid', 405);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return $this->errorResponse('The specified URL cannot be found', 404);
+        }
+
+        if ($exception instanceof HttpException) {
+            return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
+        }
+
+        if (config('app.debug')) {
+            return parent::render($request, $exception);
+        }
+
+        return $this->errorResponse('Unexpected Exception. Try later', 500);
+
     }
 }

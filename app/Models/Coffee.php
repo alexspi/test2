@@ -9,13 +9,32 @@ class Coffee extends Model
 {
     use HasFactory;
 
+    protected $table = 'coffees';
+
     public function cats()
     {
-        return $this->belongsToMany(Cat::class)
-            ->using(CatCoffee::class);
+        return $this->belongsToMany(Cat::class);
+
     }
 
-    public  function type($id){
-      return  $this->find($id)->get('type_name');
+    public function scopeGetNameId($query,$name)
+    {
+        return $query->whereName($name)
+            ->pluck('id')
+            ->toArray();
+    }
+    public function scopeGetTypeId($query,$type)
+    {
+        return $query->whereTypeName($type)
+            ->pluck('id')
+            ->toArray();
+    }
+
+    public function scopeGetNameTypeId($query,$type,$name)
+    {
+        return $query->whereTypeName($type)
+            ->whereName($name)
+            ->pluck('id')
+            ->toArray();
     }
 }

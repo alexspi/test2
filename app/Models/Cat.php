@@ -20,7 +20,7 @@ class Cat extends Model
         $arr = $this->with('coffees')->find($id)->toArray();
         $c = array_count_values(array_column($arr['coffees'], 'id'));
         $val = array_search(max($c), $c);
-        $coffe =Coffee::select('type_name')->find($val);
+        $coffe = Coffee::select('type_name')->find($val);
         return $coffe->type_name;
     }
 

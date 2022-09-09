@@ -18,18 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//        for ($i = 1; $i <= 30; $i++) {
-//            Cat::factory()
-//                ->hasAttached(Coffee::factory(rand(1, 5)),
-//                    ['count_cup' => rand(1, 10)])
-//                ->create();
-//        }
 
-        Cat::factory(20)
+        Cat::factory(30)
             ->create();
-        Coffee::factory(10)
+        Coffee::factory(30)
             ->create();
-        CatCoffee::factory(400)
+        CatCoffee::factory(900)
             ->create();
 
     }

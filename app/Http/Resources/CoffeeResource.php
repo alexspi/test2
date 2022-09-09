@@ -9,7 +9,7 @@ class CoffeeResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
@@ -17,9 +17,9 @@ class CoffeeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'type_name'=>$this->type_name,
+            'type_name' => $this->type_name,
             'calories' => $this->calories,
-            'cats'=>count($this->cats)
+            'cats' => count($this->cats)
 
         ];
     }

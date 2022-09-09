@@ -2,10 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Cat;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 
 class CatResource extends JsonResource
 {
@@ -22,6 +19,7 @@ class CatResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'weight' => $this->weight,
+            'coffees'=> array_unique( CoffeeResource::collection($this->coffees)->pluck('name')->toArray()),
             'favorite_coffee' => $this->favorite($this->id),
             'callories' => $this->coffees_sum_calories
         ];

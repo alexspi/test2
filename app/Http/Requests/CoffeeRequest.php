@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\IsValidCoffeeName;
-use App\Rules\IsValidCoffeeType;
+use App\Rules\IsValidCatName;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CatRequest extends FormRequest
+class CoffeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,14 +26,9 @@ class CatRequest extends FormRequest
     {
         return [
             'search' => ['alpha_dash'],
-            'fats_min' => ['numeric','min:0'],
-            'fats_max' => ['numeric'],
-            'coffee' => ['sometimes','alpha_dash',new IsValidCoffeeName],
-            'coffee_type' => ['sometimes','alpha_dash',new IsValidCoffeeType]
+            'callories' => ['numeric','min:0'],
+            'cats' => ['string',new IsValidCatName],
+
         ];
     }
-
-
-
-
 }
